@@ -1,0 +1,103 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{float}
+
+\title{Error Analysis of Euler's Method}
+
+\begin{document}
+\author{}
+\maketitle
+
+\section{Euler's Method for ODEs}
+We want to solve the initial value problem
+\begin{equation}\label{IVP}
+    \begin{aligned}
+        Y'(t) &= f(t, Y(t)), \quad t_0 \leq t \leq b, \\
+        Y(t_0) &= Y_0
+    \end{aligned}
+\end{equation}
+To solve the ODE numerically, we discretize the time variable:
+\[
+    t_n = t_0 + n h, \quad n = 0, 1, \dots, N
+\]
+We then find the approximate solution \( y(t) \) at the discrete nodes:
+\[
+    y(t_n) = y_h(t_n) = y_n, \quad n = 0, 1, \dots, N
+\]
+The notation used is:
+\begin{itemize}
+    \item \( Y(t) \): Exact solution
+    \item \( y(t) \): Approximate solution
+    \item \( y(t_n) \), \( y_h(t_n) \), and \( y_n \): Approximate solutions at the node points
+\end{itemize}
+Let's apply the initial value problem (\ref{IVP}) at \( t = t_n \):
+\[
+    Y'(t_n) = f(t_n, Y(t_n))
+\]
+and approximate \( Y'(t_n) \) using the \emph{forward difference}:
+\[
+    Y'(t_n) \approx \frac{Y(t_{n+1}) - Y(t_n)}{h}
+\]
+This gives us:
+\[
+    \frac{Y(t_{n+1}) - Y(t_n)}{h} \approx f(t_n, Y(t_n))
+\]
+Rearranging this equation leads to:
+\[
+    Y(t_{n+1}) \approx Y(t_n) + hf(t_n, Y(t_n))
+\]
+Euler's method defined by taking this to be exact:
+\begin{equation}
+    y_{n+1} = y_n + hf(t_n, y_n)
+\end{equation}
+For a given initial guess $y_0$ we can use the above formula to update the solution.
+Let's solve a simple IVP to see how good is Euler's method
+\begin{equation}
+    \begin{aligned}
+        Y'(t) &= -Y(t), \\
+        Y(t_0) &= 1
+    \end{aligned}
+\end{equation}
+
+Edit the \texttt{euler.c} code to set the right-hand side function, exact solution, and the initial condition. Compile and run the code for different values of $h$:
+
+\begin{verbatim}
+gcc euler.c -lm 
+./a.out
+\end{verbatim}
+
+\begin{table}[H]
+    \centering
+    \caption{Results for Different Values of \( h \)}
+    \begin{tabular}{ccccc}
+        \toprule
+        \( t \) & \( y_h(t) \) & \( Y(t) \) & \text{Error} & \text{Relative Error} \\ 
+        \midrule
+        \multicolumn{5}{c}{\textbf{\( h = 0.2 \)}} \\
+        1.0 & 3.2768e-01 & 3.6788e-01 & 4.02e-02 & 0.1093 \\ 
+        2.0 & 1.0737e-01 & 1.3534e-01 & 2.80e-02 & 0.2066 \\ 
+        3.0 & 3.5184e-02 & 4.9787e-02 & 1.46e-02 & 0.2933 \\ 
+        4.0 & 1.1529e-02 & 1.8316e-02 & 6.79e-03 & 0.3705 \\ 
+        5.0 & 3.7779e-03 & 6.7379e-03 & 2.96e-03 & 0.4393 \\ 
+        \midrule
+        \multicolumn{5}{c}{\textbf{\( h = 0.1 \)}} \\
+        1.0 & 3.4868e-01 & 3.6788e-01 & 1.92e-02 & 0.0522 \\ 
+        2.0 & 1.2158e-01 & 1.3534e-01 & 1.38e-02 & 0.1017 \\ 
+        3.0 & 4.2391e-02 & 4.9787e-02 & 7.40e-03 & 0.1486 \\ 
+        4.0 & 1.4781e-02 & 1.8316e-02 & 3.53e-03 & 0.1930 \\ 
+        5.0 & 5.1538e-03 & 6.7379e-03 & 1.58e-03 & 0.2351 \\ 
+        \midrule
+        \multicolumn{5}{c}{\textbf{\( h = 0.05 \)}} \\
+        1.0 & 3.5849e-01 & 3.6788e-01 & 9.39e-03 & 0.0255 \\ 
+        2.0 & 1.2851e-01 & 1.3534e-01 & 6.82e-03 & 0.0504 \\ 
+        3.0 & 4.6070e-02 & 4.9787e-02 & 3.72e-03 & 0.0747 \\ 
+        4.0 & 1.6515e-02 & 1.8316e-02 & 1.80e-03 & 0.0983 \\ 
+        5.0 & 5.9205e-03 & 6.7379e-03 & 8.17e-04 & 0.1213 \\ 
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+
+
+\end{document}
