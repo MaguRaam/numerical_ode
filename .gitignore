@@ -1,0 +1,19 @@
+# LaTeX temporary files
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.pdf
+*.xml
+
+# VS Code
+.vscode
+
+# object files
+*.o
+
+# data files
+*.txt
+*.dat
