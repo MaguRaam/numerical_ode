@@ -9,10 +9,11 @@ gcc euler.c -lm
 
 To plot the results
 ```bash
-gnuplot plot.gp
+./plot.sh
 ```
 
 To read the documentation
 ```bash
-pdflatex doc.tex
+cd doc/
+./doc.sh
 ```
