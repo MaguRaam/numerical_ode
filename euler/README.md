@@ -1,5 +1,5 @@
 
-# Chapter 2: Euler's Method
+# Euler's Method
 
 To compile and run the Euler's method code
 ```bash
